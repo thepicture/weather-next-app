@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useContext, useState } from "react";
 
 import { NextPage } from "next";
 import Head from "next/head";
@@ -11,27 +11,33 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@features";
 import { useRouter } from "next/router";
 
+import { SnackbarContext } from "@contexts";
+
 const NOT_FOUND = "auth/user-not-found";
 const WRONG_PASSWORD = "auth/wrong-password";
 
 const LoginPage: NextPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { showSnackbar } = useContext(SnackbarContext);
   const router = useRouter();
+
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
       .then(() => {
-        alert("Signed in successfully!");
+        showSnackbar("Signed in successfully!");
       })
       .catch((error) => {
         const errorCode = error.code;
         if (errorCode === NOT_FOUND)
-          alert("Entered email is not related to any account");
-        else if (errorCode === WRONG_PASSWORD) alert("Incorrect password");
+          showSnackbar("Entered email is not related to any account");
+        else if (errorCode === WRONG_PASSWORD)
+          showSnackbar("Incorrect password");
         else console.log(errorCode);
       });
   };
+
   return (
     <div>
       <Head>

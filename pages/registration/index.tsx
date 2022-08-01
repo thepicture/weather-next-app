@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useContext, useState } from "react";
 
 import { NextPage } from "next";
 import Head from "next/head";
@@ -11,29 +11,34 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@features";
 import { useRouter } from "next/router";
 
+import { SnackbarContext } from "@contexts";
+
 const EMAIL_IN_USE = "auth/email-already-in-use";
 
 const RegistrationPage: NextPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordAgain, setPasswordAgain] = useState("");
+  const { showSnackbar } = useContext(SnackbarContext);
   const router = useRouter();
+
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     createUserWithEmailAndPassword(auth, email, password)
       .then(() => {
         router.replace("/");
-        alert("You have been registered!");
+        showSnackbar("You have been registered!");
       })
       .catch((error) => {
         const errorCode = error.code;
         if (errorCode === EMAIL_IN_USE) {
-          alert("This email has been used!");
+          showSnackbar("This email has been used!");
         } else {
           console.log(errorCode);
         }
       });
   };
+
   return (
     <div>
       <Head>
