@@ -4,43 +4,41 @@ import { NextPage } from "next";
 import Head from "next/head";
 
 import { Box, Card, Stack, Typography, Button, TextField } from "@mui/material";
-import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
+import LoginIcon from "@mui/icons-material/Login";
 
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 import { auth } from "@features";
 import { useRouter } from "next/router";
 
-const EMAIL_IN_USE = "auth/email-already-in-use";
+const NOT_FOUND = "auth/user-not-found";
+const WRONG_PASSWORD = "auth/wrong-password";
 
-const RegistrationPage: NextPage = () => {
+const LoginPage: NextPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [passwordAgain, setPasswordAgain] = useState("");
   const router = useRouter();
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    createUserWithEmailAndPassword(auth, email, password)
+    signInWithEmailAndPassword(auth, email, password)
       .then(() => {
-        router.replace("/");
-        alert("You have been registered!");
+        alert("Signed in successfully!");
       })
       .catch((error) => {
         const errorCode = error.code;
-        if (errorCode === EMAIL_IN_USE) {
-          alert("This email has been used!");
-        } else {
-          console.log(errorCode);
-        }
+        if (errorCode === NOT_FOUND)
+          alert("Entered email is not related to any account");
+        else if (errorCode === WRONG_PASSWORD) alert("Incorrect password");
+        else console.log(errorCode);
       });
   };
   return (
     <div>
       <Head>
-        <title>Create Account</title>
+        <title>Login</title>
         <meta
           name="description"
-          content="Create a new account to start using app"
+          content="Enter credentials to sign in on the site"
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -56,9 +54,9 @@ const RegistrationPage: NextPage = () => {
         <Card component="main" sx={{ width: "100%", maxWidth: "500px" }}>
           <form onSubmit={handleSubmit}>
             <Stack textAlign="center">
-              <AppRegistrationIcon sx={{ width: "100%" }} />
+              <LoginIcon sx={{ width: "100%" }} />
               <Typography component="h1" variant="h6" mb={2}>
-                Create Account
+                Login
               </Typography>
               <TextField
                 value={email}
@@ -72,24 +70,12 @@ const RegistrationPage: NextPage = () => {
                 type="password"
                 placeholder="Password"
               />
-              <TextField
-                value={passwordAgain}
-                onChange={(event) => setPasswordAgain(event.target.value)}
-                type="password"
-                placeholder="Repeat password"
-              />
               <Button
-                disabled={
-                  !email ||
-                  !password ||
-                  !passwordAgain ||
-                  password !== passwordAgain
-                }
                 type="submit"
-                title="Sign up with a new account"
+                title="Sign in with entered credentials"
                 variant="contained"
               >
-                Register
+                Login
               </Button>
               <Button
                 onClick={() => router.push("/")}
@@ -105,4 +91,4 @@ const RegistrationPage: NextPage = () => {
   );
 };
 
-export default RegistrationPage;
+export default LoginPage;

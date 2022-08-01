@@ -1,5 +1,6 @@
 import { Box, Button, Card, Stack, Typography } from "@mui/material";
 import CloudIcon from "@mui/icons-material/Cloud";
+
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
@@ -30,12 +31,14 @@ const Home: NextPage = () => {
             <Typography component="h1" variant="h6" mb={2}>
               Weather App
             </Typography>
-            <Button
-              title="Sign in with the existing account"
-              variant="contained"
-            >
-              Login
-            </Button>
+            <Link href="/login">
+              <Button
+                title="Sign in with the existing account"
+                variant="contained"
+              >
+                Login
+              </Button>
+            </Link>
             <Link href="/registration">
               <Button title="Sign up with a new account">Create account</Button>
             </Link>
