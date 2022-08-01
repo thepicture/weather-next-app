@@ -30,16 +30,14 @@ const Home: NextPage = () => {
             <Typography component="h1" variant="h6" mb={2}>
               Weather App
             </Typography>
-            <Link href="/login">
-              <Button
-                title="Sign in with the existing account"
-                variant="contained"
-              >
-                Login
-              </Button>
-            </Link>
-            <Link href="/register">
-              <Button title="Sign up with a new account">Register</Button>
+            <Button
+              title="Sign in with the existing account"
+              variant="contained"
+            >
+              Login
+            </Button>
+            <Link href="/registration">
+              <Button title="Sign up with a new account">Create account</Button>
             </Link>
           </Stack>
         </Card>

@@ -1,6 +1,6 @@
 import type { AppProps } from "next/app";
 import { createTheme, ThemeProvider } from "@mui/material";
-import purple from "@mui/material/colors/purple";
+import { purple } from "@mui/material/colors";
 
 import "../styles/globals.css";
 
@@ -17,6 +17,13 @@ const theme = createTheme({
       },
     },
     MuiButton: {
+      styleOverrides: {
+        root: {
+          marginTop: "1em",
+        },
+      },
+    },
+    MuiTextField: {
       styleOverrides: {
         root: {
           marginTop: "1em",
