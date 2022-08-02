@@ -25,7 +25,9 @@ const WeatherPage: NextPage = () => {
   };
 
   useEffect(() => {
-    if (!auth.currentUser) router.replace("/login");
+    auth.onAuthStateChanged((user) => {
+      if (!user) router.replace("/login");
+    });
   }, [auth.currentUser]);
 
   return (
