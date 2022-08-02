@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://dataservice.accuweather.com/locations/v1/";
+const BASE_URL = "http://dataservice.accuweather.com/";
 const TIMEOUT_IN_MILLISECONDS = 4 * 1000;
 
 const DEFAULT_LANGUAGE = "en-us";

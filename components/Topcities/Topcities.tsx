@@ -6,7 +6,6 @@ import { ICityData } from "accu-weather-api-wrapper";
 
 import { topcitiesFetcher } from "@features";
 import { City } from "@components";
-import { Card } from "@mui/material";
 
 const TOPCITIES_DATA = ["topcitiesData"];
 const STALE_TIME_IN_MILLISECONDS = 32 * 1000;
@@ -38,6 +37,7 @@ export const Topcities: React.FC = () => {
         return (
           <City
             key={city.Key}
+            locationKey={city.Key}
             country={city.Country}
             geoPosition={city.GeoPosition}
           />
