@@ -27,6 +27,7 @@ const LoginPage: NextPage = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then(() => {
         showSnackbar("Signed in successfully!");
+        router.replace("/weather");
       })
       .catch((error) => {
         const errorCode = error.code;
