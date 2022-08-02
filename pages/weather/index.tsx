@@ -8,6 +8,7 @@ import { Button } from "@mui/material";
 import { signOut } from "firebase/auth";
 
 import { auth } from "@features";
+import { Topcities } from "@components";
 import { SnackbarContext } from "@contexts";
 
 const WeatherPage: NextPage = () => {
@@ -37,7 +38,7 @@ const WeatherPage: NextPage = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div>WeatherPage</div>
+      <Topcities />
       <Button onClick={handleSignOut}>Sign Out</Button>
     </>
   );
